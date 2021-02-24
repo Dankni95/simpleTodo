@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.4.2/css/bulma.css">
+  <title>Document</title>
+</head>
+
+<body>
+
+  <section class="hero is-small is-info is-bold">
+    <div class="hero-body">
+      <div class="container">
+        <h1 class="title">
+          Primary bold title
+        </h1>
+        <h2 class="subtitle">
+          Primary bold subtitle
+        </h2>
+      </div>
+    </div>
+  </section>
+
+
+
+  <div class="tabs is-toggle is-fullwidth">
+    <ul>
+      <li class="is-active">
+        <a>
+          <span class="icon is-small"><i class="fas fa-image" aria-hidden="true"></i></span>
+          <span>Pictures</span>
+        </a>
+      </li>
+      <li>
+        <a>
+          <span class="icon is-small"><i class="fas fa-music" aria-hidden="true"></i></span>
+          <span>Music</span>
+        </a>
+      </li>
+      <li>
+        <a>
+          <span class="icon is-small"><i class="fas fa-film" aria-hidden="true"></i></span>
+          <span>Videos</span>
+        </a>
+      </li>
+      <li>
+        <a>
+          <span class="icon is-small"><i class="fas fa-file-text-o" aria-hidden="true"></i></span>
+          <span>Documents</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  <div style="margin-top:50px; width: 80%;" class="block">
+
+    <!-- Fill inn for toDo, new toDo-->
+    <div class="field is-horizontal">
+      <div class="field-label">
+        <label class="label">Title</label>
+      </div>
+      <div class="field-body is-horizontal">
+        <div class="field">
+          <p class="control has-icons-left">
+            <!-- if not filled, is-danger and unhide help is-danger under! -->
+            <input class="input is-danger" id="toDosTitle" type="text" placeholder="Add to do title">
+            <span class="icon is-small is-left">
+              <i class="fas fa-user"></i>
+              <p class="help is-danger">
+                This field is required
+              </p>
+            </span>
+          </p>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="field is-horizontal">
+      <div class="field-label is-normal">
+        <label class="label">Tag</label>
+      </div>
+      <div class="field-body">
+        <div class="field is-narrow">
+          <div class="control">
+            <div class="select">
+              <select id="toDosTag">
+                <option>Ideas</option>
+                <option>Design</option>
+                <option>Development</option>
+                <option>Deployment</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="field is-horizontal">
+      <div class="field-label">
+        <label class="label">Already a member?</label>
+      </div>
+      <div class="field-body">
+        <div class="field is-narrow">
+          <div class="control">
+            <label class="radio">
+              <input type="radio" name="member">
+              Yes
+            </label>
+            <label class="radio">
+              <input type="radio" name="member">
+              No
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="field is-horizontal">
+      <div class="field-label is-normal">
+        <label class="label">To do body</label>
+      </div>
+      <div class="field-body">
+        <div class="field">
+          <div class="control">
+            <textarea id="toDosBody" class="textarea" placeholder="Add to do body here..."></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="field is-horizontal">
+      <div class="field-label">
+        <!-- Left empty for spacing -->
+      </div>
+      <div class="field-body">
+        <div class="field">
+          <div class="control">
+            <button id="toDoBtn" class="button is-primary">
+              Create task
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- is-active gjør den visible -->
+  <div class="modal is-hidden">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title">Add modal title to functionality <span class="tag is-visible"> hello </span></p>
+        <button class="delete" aria-label="close"></button>
+      </header>
+      <section class="modal-card-body">
+        <span class="tag is-primary">Hello</span>
+
+
+        Hello!
+      </section>
+      <footer class="modal-card-foot">
+        <button class="button is-success">Save changes</button>
+        <button class="button">Cancel</button>
+      </footer>
+    </div>
+  </div>
+
+  <div id="toDos" style="margin-top:50px; padding: 55px; width: 98%;" class="block"></div>
+  
+
+
+
+  <script src="index.js">
+
+
+  </script>
+
+
+
+
+
+
+
+</body>
+
+</html>
