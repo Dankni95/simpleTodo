@@ -9,11 +9,11 @@ class Todo {
        customize(){
         switch (this.tag) {
           case "Ideas":
-            return `is-info`;
+            return `is-dark`;
             case "Design":
-              return `is-link`;
+              return `is-primary`;
               case "Development":
-            return `is-primary`;
+            return `is-info`;
             case "Deployment":
             return `is-success`;
           default:
@@ -44,7 +44,7 @@ class Todo {
               <br>
               <br>
               <br>
-              <button class="button is-focused is-info">Update card</button>
+              <button class="button is-focused  ${this.customize()}">Update card</button>
             </div>              
       </div>
     </div>
@@ -64,7 +64,7 @@ class Todo {
               <br>
               <br>
               <br>
-              <button class="button is-focused is-info">Update card</button>
+              <button class="button is-focused  ${this.customize()}">Update card</button>
             </div>              
           </div>
 
