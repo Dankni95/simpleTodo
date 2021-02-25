@@ -5,13 +5,27 @@ class Todo {
         this.tag = tag;
         this.id = id;
 
-    }
+       }
+       customize(){
+        switch (this.tag) {
+          case "Ideas":
+            return `is-info`;
+            case "Design":
+              return `is-link`;
+              case "Development":
+            return `is-primary`;
+            case "Deployment":
+            return `is-success`;
+          default:
+            return console.log("Something went wrong @customize function " + this.tag);
+        }
+      }
     outputTodo() {
         if (this.id % 2 == 0) {
             return `
     <div id="toDos${this.id}" class="columns is-vcentered">
       <div class="column">
-        <p class="notification has-text-centered is-info" style="padding: 55px;">Progress bar
+        <p class="notification has-text-centered ${this.customize()}" style="padding: 55px;">Progress bar
           <br>
           <br>
           <progress class="progress is-large is-danger" max="100">30%</progress>
@@ -19,14 +33,14 @@ class Todo {
 
       </div>
       <div class="column is-two-thirds">
-        <article class="message is-info is-large">
+        <article class="message ${this.customize()} is-large">
           <div class="message-header is-size-4">
             <span class="tag is-dark is-rouded">${this.tag}</span>
             ${this.title}
             <button class="button delete has-addon is-black is-large"></button>
             </div>
             <div class="message-body">
-              <span class="content is-small">${this.toDoBody}</span>
+              <span class="content is-small is-info">${this.toDoBody}</span>
               <br>
               <br>
               <br>
@@ -39,7 +53,7 @@ class Todo {
             return `
     <div id="toDos${this.id}" class="columns is-vcentered">
       <div class="column is-two-thirds">
-        <article class="message is-info is-large">
+        <article class="message ${this.customize()} is-large">
           <div class="message-header is-size-4">
             <span class="tag is-dark is-rouded">${this.tag}</span>
             ${this.title}
@@ -56,7 +70,7 @@ class Todo {
 
       <div class="column">
         <div class="column">
-          <p class="notification has-text-centered is-info" style="padding: 54px; width: 105%; right: 3%">Progress bar
+          <p class="notification has-text-centered ${this.customize()}" style="padding: 54px; width: 105%; right: 3%">Progress bar
             <br>
             <br>
             <progress style="width: 100%;" class="progress is-link is-large" value="30" max="100">50%</progress>
@@ -87,9 +101,11 @@ function createTodos() {
     const primaryDiv = document.getElementById('toDos');
 
     let newTodo = new Todo(`${toDoTitle}`, `${toDoBody}`, `${toDoTag}`, `${nodes}`);
+    newTodo.customize();
     primaryDiv.innerHTML += newTodo.outputTodo();
 
-
+    let json = JSON.stringify(newTodo);
+    console.log(json);
 
 
 }
