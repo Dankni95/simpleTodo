@@ -69,11 +69,10 @@
         <div class="field">
           <p class="control has-icons-left">
             <!-- if not filled, is-danger and unhide help is-danger under! -->
-            <input class="input is-danger" id="toDosTitle" type="text" placeholder="Add to do title" required>
+            <input class="input" id="toDosTitle" type="text" placeholder="Add to do title" required>
             <span class="icon is-small is-left">
               <i class="fas fa-user"></i>
-              <p class="help is-danger">
-                This field is required
+              <p class="help is-hidden" id="tooLongStringAlert">
              </p>
             </span>
           </p>
