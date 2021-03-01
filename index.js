@@ -14,9 +14,10 @@ class Todo {
     this.toDoBody = toDoBody;
     this.tag = tag;
     this.id = id;
+    //  this.addEventListener("click",this.removeObject);
+
 
   }
-
 
   customize() {
     switch (this.tag) {
@@ -49,14 +50,14 @@ class Todo {
           <div class="message-header is-size-4">
             <span class="tag is-dark is-rouded">${this.tag}</span>
             ${this.title}
-            <button class="button delete has-addon is-black is-large"></button>
+            <button id="deleteBtn${this.id}" class="button delete has-addon is-black is-large"></button>
             </div>
             <div class="message-body">
             <span class="content is-small is-info">${this.toDoBody}</span>
             <br>
             <br>
             <br>
-            <button class="button is-focused  ${this.customize()}">Update card</button>
+            <button id="updateBtn${this.id}" class="button is-focused  ${this.customize()}">Update card</button>
             </div>              
             </div>
             </div>
@@ -69,14 +70,14 @@ class Todo {
           <div class="message-header is-size-4">
           <span class="tag is-dark is-rouded">${this.tag}</span>
           ${this.title}
-          <button class="button delete has-addon is-black is-large"></button>
+          <button id="deleteBtn${this.id}" class="button delete has-addon is-black is-large"></button>
             </div>
             <div class="message-body">
             <span class="content is-small">${this.toDoBody}</span>
               <br>
               <br>
               <br>
-              <button class="button is-focused  ${this.customize()}">Update card</button>
+              <button id="updateBtn${this.id}" class="button is-focused  ${this.customize()}">Update card</button>
               </div>              
               </div>
               
@@ -108,7 +109,7 @@ function limitLengthEmptyTitle() {
     toDoTitle.className = `input is-primary`;
     titleAlert.className = `help is-hidden`;
 
-    createTodos();
+    output();
     toDoTitle.value = null;
 
   }
@@ -116,12 +117,10 @@ function limitLengthEmptyTitle() {
 
 
 
-
-
-function createTodos() {
+function output() {
   const nodes = primaryDiv.childElementCount + 1;
-
   let newTodo = new Todo(`${toDoTitle.value}`, `${toDoBody.value}`, `${toDoTag.value}`, `${nodes}`);
+
   newTodo.customize();
   primaryDiv.innerHTML += newTodo.outputTodo();
 
@@ -130,4 +129,20 @@ function createTodos() {
 
 
 }
+
+
+
+document.addEventListener('click', function (e) {
+  let buttonIds = primaryDiv.getElementsByTagName('button');
+  for (let i = 0; i < buttonIds.length; i++) {
+    if (e.target.id == buttonIds[i].id) {
+      let lol = buttonIds[i].id;
+      // Since buttonID is the same as ToDoID, slice to for selection
+      let childrenDivRemove = document.querySelector(`#toDos${lol.slice(lol.length - 1)}`);
+      // To DO:
+      // Add validiontion for deletion
+      childrenDivRemove.remove();
+      }
+  }
+});
 
