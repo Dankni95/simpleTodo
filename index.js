@@ -126,6 +126,9 @@ function output() {
 
   let json = JSON.stringify(newTodo);
   console.log(json);
+   let lols = JSON.parse(json);
+
+  console.log(lols.title);
 
 
 }
