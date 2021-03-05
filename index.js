@@ -9,9 +9,9 @@ const titleAlert = document.getElementById("tooLongStringAlert");
 
 
 class Todo {
-  constructor(title, toDoBody, tag, id) {
+  constructor(title, body, tag, id) {
     this.title = title;
-    this.toDoBody = toDoBody;
+    this.body = body;
     this.tag = tag;
     this.id = id;
 
@@ -52,7 +52,7 @@ class Todo {
             <button id="deleteBtn${this.id}" class="button delete has-addon is-black is-large"></button>
             </div>
             <div class="message-body">
-            <span class="content is-small is-info">${this.toDoBody}</span>
+            <span class="content is-small is-info">${this.body}</span>
             <br>
             <br>
             <br>
@@ -72,7 +72,7 @@ class Todo {
           <button id="deleteBtn${this.id}" class="button delete has-addon is-black is-large"></button>
             </div>
             <div class="message-body">
-            <span class="content is-small">${this.toDoBody}</span>
+            <span class="content is-small">${this.body}</span>
               <br>
               <br>
               <br>
@@ -119,20 +119,20 @@ function limitLengthEmptyTitle() {
   } else {
     toDoTitle.className = `input is-primary`;
     titleAlert.className = `help is-hidden`;
-    
+
     output();
     toDoTitle.value = null;
-    
+
   }
 }
 
 function toDoObj() {
   console.log();
   let newTodo = new Todo(`${toDoTitle.value}`, `${toDoBody.value}`, `${toDoTag.value}`, `${primaryDiv.childElementCount}`);
-  
+
 
   return newTodo;
-  
+
 }
 function outputFromLocalStorage(toDoFromLocal) {
   toDoFromLocal.customize();
@@ -140,11 +140,11 @@ function outputFromLocalStorage(toDoFromLocal) {
 }
 
 function output() {
-  
+
   toDoObj().customize();
   primaryDiv.innerHTML += toDoObj().outputTodo();
   addToLocalStorage();
-  
+
 }
 
 function addToLocalStorage() {
