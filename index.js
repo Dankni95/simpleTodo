@@ -33,7 +33,7 @@ class Todo {
     }
   }
   outputTodo() {
-    if (this.id % 2 == 0) {
+    if (this.id % 2 === 0) {
       return `
       <div id="toDos${this.id}" class="columns is-vcentered">
       <div class="column">
@@ -112,7 +112,7 @@ window.onload = function getFromLocalStorage() {
 
 
 function limitLengthEmptyTitle() {
-  if (toDoTitle.value.length > 45 || toDoTitle.value.length == 0) {
+  if (toDoTitle.value.length > 45 || toDoTitle.value.length === 0) {
     toDoTitle.className = `input is-danger`;
     titleAlert.className = `help is-danger`;
     titleAlert.innerHTML = "Title cannot be too long or empty";
@@ -154,19 +154,24 @@ function addToLocalStorage() {
 
 }
 
-
+function deleteFromLocalStorage(keyToDelete) {
+  localStorage.removeItem(`${keyToDelete}`);
+}
 
 
 document.addEventListener('click', function (e) {
   let buttonIds = primaryDiv.getElementsByTagName('button');
   for (let i = 0; i < buttonIds.length; i++) {
-    if (e.target.id == buttonIds[i].id) {
-      let lol = buttonIds[i].id;
-      // Since buttonID is the same as ToDoID, slice to for selection
-      let childrenDivRemove = document.querySelector(`#toDos${lol.slice(lol.length - 1)}`);
+    if (e.target.id === buttonIds[i].id) {
+      let clickedButtonId = buttonIds[i].id;
+      // Since buttonID full name is example:"deleteBtn1", slice to integer for selection
+      let sliceDownToInteger = clickedButtonId.slice(clickedButtonId.length - 1);
+
+      let childrenDivRemove = document.querySelector(`#toDos${sliceDownToInteger}`);
       // To DO:
       // Add validiontion for deletion
       childrenDivRemove.remove();
+      deleteFromLocalStorage(sliceDownToInteger);
     }
   }
 });
