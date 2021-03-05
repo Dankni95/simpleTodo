@@ -14,7 +14,6 @@ class Todo {
     this.toDoBody = toDoBody;
     this.tag = tag;
     this.id = id;
-    //  this.addEventListener("click",this.removeObject);
 
 
   }
@@ -97,7 +96,19 @@ class Todo {
   }
 }
 
-createBtn.onclick = limitLengthEmptyTitle;
+
+window.onload = function getFromLocalStorage() {
+  for (let i = 1; i < localStorage.length + 1; i++) {
+    // henter ikke ut fra local bare overwriter!!! --fixxxxxxxx :))) getting close tho
+    let getToDoObj = localStorage.getItem(`${i}`);
+    let parsedToDoObj = JSON.parse(getToDoObj);
+    let toDoFromLocal = new Todo(`${parsedToDoObj.title}`, `${parsedToDoObj.body}`, `${parsedToDoObj.tag}`, `${parsedToDoObj.id}`);
+    outputFromLocalStorage(toDoFromLocal);
+  }
+
+
+}
+
 
 
 function limitLengthEmptyTitle() {
@@ -108,30 +119,41 @@ function limitLengthEmptyTitle() {
   } else {
     toDoTitle.className = `input is-primary`;
     titleAlert.className = `help is-hidden`;
-
+    
     output();
     toDoTitle.value = null;
-
+    
   }
 }
 
+function toDoObj() {
+  console.log();
+  let newTodo = new Todo(`${toDoTitle.value}`, `${toDoBody.value}`, `${toDoTag.value}`, `${primaryDiv.childElementCount}`);
+  
 
+  return newTodo;
+  
+}
+function outputFromLocalStorage(toDoFromLocal) {
+  toDoFromLocal.customize();
+  primaryDiv.innerHTML += toDoFromLocal.outputTodo();
+}
 
 function output() {
-  const nodes = primaryDiv.childElementCount + 1;
-  let newTodo = new Todo(`${toDoTitle.value}`, `${toDoBody.value}`, `${toDoTag.value}`, `${nodes}`);
+  
+  toDoObj().customize();
+  primaryDiv.innerHTML += toDoObj().outputTodo();
+  addToLocalStorage();
+  
+}
 
-  newTodo.customize();
-  primaryDiv.innerHTML += newTodo.outputTodo();
+function addToLocalStorage() {
 
-  let json = JSON.stringify(newTodo);
-  console.log(json);
-   let lols = JSON.parse(json);
-
-  console.log(lols.title);
-
+  let objString = JSON.stringify(toDoObj());
+  localStorage.setItem(`${toDoObj().id}`, objString);
 
 }
+
 
 
 
@@ -145,7 +167,9 @@ document.addEventListener('click', function (e) {
       // To DO:
       // Add validiontion for deletion
       childrenDivRemove.remove();
-      }
+    }
   }
 });
 
+
+createBtn.onclick = limitLengthEmptyTitle;

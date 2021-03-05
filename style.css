@@ -1,4 +1,8 @@
 div {
     word-wrap: break-word;
   }
+ 
+.modal-card-head{
+  background-color: lightblue;
   
+}
