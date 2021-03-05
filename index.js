@@ -102,7 +102,7 @@ window.onload = function getFromLocalStorage() {
     // henter ikke ut fra local bare overwriter!!! --fixxxxxxxx :))) getting close tho
     let getToDoObj = localStorage.getItem(`${i}`);
     let parsedToDoObj = JSON.parse(getToDoObj);
-    let toDoFromLocal = new Todo(`${parsedToDoObj.title}`, `${parsedToDoObj.body}`, `${parsedToDoObj.tag}`, `${parsedToDoObj.id}`);
+    let toDoFromLocal = new Todo(`${parsedToDoObj.title}`, `${parsedToDoObj.body}`, `${parsedToDoObj.tag}`, `${i}`);
     outputFromLocalStorage(toDoFromLocal);
   }
 
@@ -121,15 +121,15 @@ function limitLengthEmptyTitle() {
     titleAlert.className = `help is-hidden`;
 
     output();
-    toDoTitle.value = null;
+    location.reload();
+    // add task created alert box top :) 
 
   }
 }
 
 function toDoObj() {
-  console.log();
+  console.log(primaryDiv.childElementCount)
   let newTodo = new Todo(`${toDoTitle.value}`, `${toDoBody.value}`, `${toDoTag.value}`, `${primaryDiv.childElementCount}`);
-
 
   return newTodo;
 
