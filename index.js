@@ -6,6 +6,9 @@ const primaryDiv = document.getElementById('toDos');
 const titleAlert = document.getElementById("tooLongStringAlert");
 const createSuccess = document.getElementById("create-success");
 const successText = document.getElementById("success-text");
+const deleteDiv = document.getElementById("delete-div");
+const deleteConfirmed = document.getElementById("delete-confirm");
+const deleteCancelled = document.getElementById("delete-cancel");
 
 
 
@@ -109,7 +112,7 @@ function sortLocalStorageIdsAfterDeletion() {
   for (let i = 0; i <= keys.length; i++) {
     let localItem = localStorage.getItem(keys[i]);
     if (!localItem) continue;
-     console.log(values.push(localItem)); 
+    console.log(values.push(localItem));
 
   }
   console.log(values);
@@ -121,7 +124,7 @@ function sortLocalStorageIdsAfterDeletion() {
   let numCallbackRuns = 1;
 
   localStorage.clear() // WELP, 1h lost for not understanding why there was duplicate entries.. 
-                      //did not clear localStorage before rebuilding :/
+  //did not clear localStorage before rebuilding :/
 
   // then parsing to obj and filling missing ids
   values.forEach(function (element) {
@@ -169,12 +172,12 @@ function createSuccessMessage(deleteOrCreate) {
     createSuccess.className = "container is-widescreen has-text-centered";
     window.scrollTo({ top: 180, behavior: 'smooth' });
 
-     setTimeout(() => {     createSuccess.className = "container is-widescreen has-text-centered is-hidden";    }, 1500);
+    setTimeout(() => { createSuccess.className = "container is-widescreen has-text-centered is-hidden"; }, 1500);
   } else if (!deleteOrCreate) {
     successText.innerHTML = `You just added <strong>new task</strong> <code>" ${toDoTitle.value} "</code> with tag <span class="tag is-dark is-rouded">${toDoTag.value}</span><button class="button is-info is-loading"></button> `;
     createSuccess.className = "container is-widescreen has-text-centered";
     window.scrollTo({ top: 280, behavior: 'smooth' });
-    setTimeout(() => { location.reload(); }, 2000);
+    setTimeout(() => { location.reload(); }, 1500);
 
 
 
@@ -226,7 +229,7 @@ function deleteFromLocalStorage(keyToDelete) {
   clearDivForRebuilding();  // clearing divs after deletion for rebuilding, no need to reload page.
   sortLocalStorageIdsAfterDeletion();
 }
-function clearDivForRebuilding(){
+function clearDivForRebuilding() {
   primaryDiv.innerHTML = "";
 }
 
@@ -241,12 +244,28 @@ document.addEventListener('click', function (e) {
       let sliceDownToInteger = clickedButtonId.slice(clickedButtonId.length - 1);
       let childrenDivRemove = document.querySelector(`#toDos${sliceDownToInteger}`);
       // To DO:
-      // Add validiontion for deletion
-      childrenDivRemove.remove();
-      deleteFromLocalStorage(sliceDownToInteger);
+      // Add validiontion for deletion // Done
+
+      //Making confirmation modal visible
+      deleteDiv.className = "modal is-active";
+      deleteConfirmed.onclick = () => deleteNow(true); 
+      deleteCancelled.onclick = () => deleteNow(false); 
+
+      function deleteNow(deleteOrCancel) {
+        if (deleteOrCancel) {
+          //delete
+          deleteFromLocalStorage(sliceDownToInteger)
+          childrenDivRemove.remove();
+          deleteDiv.className = "modal is-hidden";
+        }else{
+          //Cancel
+          deleteDiv.className = "modal is-hidden";
+        }
+      }
     }
   }
 });
 
 
 createBtn.onclick = limitLengthEmptyTitle;
+
