@@ -4,6 +4,8 @@ const toDoBody = document.getElementById("toDosBody");
 const toDoTag = document.getElementById("toDosTag");
 const primaryDiv = document.getElementById('toDos');
 const titleAlert = document.getElementById("tooLongStringAlert");
+const createSuccess = document.getElementById("create-success");
+const successText = document.getElementById("success-text");
 
 
 
@@ -21,11 +23,11 @@ class Todo {
   customize() {
     switch (this.tag) {
       case "Ideas":
-        return `is-dark`;
+        return `is-info`;
       case "Design":
         return `is-primary`;
       case "Development":
-        return `is-info`;
+        return `is-danger`;
       case "Deployment":
         return `is-success`;
       default:
@@ -97,17 +99,47 @@ class Todo {
 }
 
 
-window.onload = function getFromLocalStorage() {
-  for (let i = 1; i < localStorage.length + 1; i++) {
-    // henter ikke ut fra local bare overwriter!!! --fixxxxxxxx :))) getting close tho
-    let getToDoObj = localStorage.getItem(`${i}`);
-    let parsedToDoObj = JSON.parse(getToDoObj);
-    let toDoFromLocal = new Todo(`${parsedToDoObj.title}`, `${parsedToDoObj.body}`, `${parsedToDoObj.tag}`, `${i}`);
-    outputFromLocalStorage(toDoFromLocal);
+function sortLocalStorageIdsAfterDeletion() {
+
+  // getting all localStorage keys
+  var values = []
+  keys = Object.keys(localStorage);
+
+  //getting from local then pushing into array
+  for (let i = 0; i <= keys.length; i++) {
+    let localItem = localStorage.getItem(keys[i]);
+    if (!localItem) continue;
+     console.log(values.push(localItem)); 
+
   }
+  console.log(values);
+  //Sorting after ids
+  values.sort(function (a, b) {
 
+    return a.slice(-3)[0] - b.slice(-3)[0];
+  });
+  let numCallbackRuns = 1;
 
+  localStorage.clear() // WELP, 1h lost for not understanding why there was duplicate entries.. 
+                      //did not clear localStorage before rebuilding :/
+
+  // then parsing to obj and filling missing ids
+  values.forEach(function (element) {
+    let parsedElem = JSON.parse(element);
+    parsedElem.id = numCallbackRuns;
+    // then adding sorted and filled objects back to localStorage.. crossing fingers that this works
+    console.log(parsedElem);
+    let toDoFromLocal = new Todo(`${parsedElem.title}`, `${parsedElem.body}`, `${parsedElem.tag}`, `${parsedElem.id}`);
+    console.log(toDoFromLocal);
+    addToLocalStorage(toDoFromLocal);
+    outputFromLocalStorage(toDoFromLocal);
+    numCallbackRuns++;
+
+  });
 }
+
+
+window.onload = sortLocalStorageIdsAfterDeletion();
 
 
 
@@ -120,42 +152,82 @@ function limitLengthEmptyTitle() {
     toDoTitle.className = `input is-primary`;
     titleAlert.className = `help is-hidden`;
 
+    // add task created alert box top :) // Done
+    createSuccessMessage(false);
     output();
-    location.reload();
-    // add task created alert box top :) 
+  }
+}
+
+
+
+
+function createSuccessMessage(deleteOrCreate) {
+
+  // add get deleted object
+  if (deleteOrCreate) {
+    successText.innerHTML = `You just deleted <strong>a task</strong> with tag <span class="tag is-dark is-rouded">${toDoTag.value}</span><button class="button is-info is-loading"></button> `;
+    createSuccess.className = "container is-widescreen has-text-centered";
+    window.scrollTo({ top: 180, behavior: 'smooth' });
+
+     setTimeout(() => {     createSuccess.className = "container is-widescreen has-text-centered is-hidden";    }, 1500);
+  } else if (!deleteOrCreate) {
+    successText.innerHTML = `You just added <strong>new task</strong> <code>" ${toDoTitle.value} "</code> with tag <span class="tag is-dark is-rouded">${toDoTag.value}</span><button class="button is-info is-loading"></button> `;
+    createSuccess.className = "container is-widescreen has-text-centered";
+    window.scrollTo({ top: 280, behavior: 'smooth' });
+    setTimeout(() => { location.reload(); }, 2000);
+
+
 
   }
 }
 
+// creating new to do OBJ. This is directly from the form user fills in.
 function toDoObj() {
-  console.log(primaryDiv.childElementCount)
-  let newTodo = new Todo(`${toDoTitle.value}`, `${toDoBody.value}`, `${toDoTag.value}`, `${primaryDiv.childElementCount}`);
 
+  // Added + 1 for ID, creates new ID
+  let newTodo = new Todo(`${toDoTitle.value}`, `${toDoBody.value}`, `${toDoTag.value}`, `${primaryDiv.childElementCount + 1}`);
   return newTodo;
 
 }
+// outputting from localStorage
 function outputFromLocalStorage(toDoFromLocal) {
+
   toDoFromLocal.customize();
   primaryDiv.innerHTML += toDoFromLocal.outputTodo();
-}
 
+}
+// outputting and changing colors for tags   !from localStorage
 function output() {
 
   toDoObj().customize();
   primaryDiv.innerHTML += toDoObj().outputTodo();
-  addToLocalStorage();
+  addToLocalStorage(toDoObj());
+
 
 }
 
-function addToLocalStorage() {
+//Adding to localStorage after creation
 
-  let objString = JSON.stringify(toDoObj());
-  localStorage.setItem(`${toDoObj().id}`, objString);
+function addToLocalStorage(newEntry) {
+
+  let objString = JSON.stringify(newEntry);
+  localStorage.setItem(`${newEntry.id}`, objString);
 
 }
 
 function deleteFromLocalStorage(keyToDelete) {
+  sortLocalStorageIdsAfterDeletion();
+
+  console.log("Key to delete: ", keyToDelete);
   localStorage.removeItem(`${keyToDelete}`);
+
+  //Need to sort ids after one is deleted
+  createSuccessMessage(true);
+  clearDivForRebuilding();  // clearing divs after deletion for rebuilding, no need to reload page.
+  sortLocalStorageIdsAfterDeletion();
+}
+function clearDivForRebuilding(){
+  primaryDiv.innerHTML = "";
 }
 
 
@@ -164,9 +236,9 @@ document.addEventListener('click', function (e) {
   for (let i = 0; i < buttonIds.length; i++) {
     if (e.target.id === buttonIds[i].id) {
       let clickedButtonId = buttonIds[i].id;
+
       // Since buttonID full name is example:"deleteBtn1", slice to integer for selection
       let sliceDownToInteger = clickedButtonId.slice(clickedButtonId.length - 1);
-
       let childrenDivRemove = document.querySelector(`#toDos${sliceDownToInteger}`);
       // To DO:
       // Add validiontion for deletion
