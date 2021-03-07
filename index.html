@@ -8,85 +8,110 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.4.2/css/bulma.css">
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.css" />
+  <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+
+
+
+
+
 
   <title>Simple to do</title>
 </head>
 
 <body>
+
   <nav id="create-success" class="navbar is-fixed-bottom is-hidden" role="navigation" aria-label="main navigation">
     <div class="navbar-brand ">
       <div class="container is-max-desktop">
-    <div class="notification is-primary has-text-centered">
-        <p class="has-text-info" id="success-text">
-  
-        </p>
+        <div class="notification is-primary has-text-centered">
+          <p class="has-text-info" id="success-text">
+
+          </p>
+        </div>
       </div>
     </div>
-  </div>
-</nav>
+  </nav>
 
 
-  <section class="hero is-info is-small">
-    <br>
-    <div class="hero-head">
-      <nav class="navbar">
-        <div class="container">
-          <div class="navbar-brand">
-            <a class="navbar-item">
-              <img src="https://bulma.io/images/bulma-type-white.png" alt="Logo">
-            </a>
-            <div>
-            </div>
-          </div>
-      </nav>
-    </div>
-
-    <div class="hero-body">
+  <section class="hero is-info is-max-desktop">
+    <div class="hero is-info is-fullwidth hero-body">
+      <!-- Slider main container -->
       <div class="container has-text-centered">
         <p class="title">
-          Daniel lærer Bulma, JS og localStorage :)
+          Daniel lærer noe......... :)
         </p>
         <p class="subtitle">
           Moms spaghetti kode under
         </p>
       </div>
-      <div id="navbarMenuHeroB" class="navbar-menu has-text-centered">
-        <span class="navbar-item is">
-          <a class=" is-small">
-            <a href="https://github.com/Dankni95/simpleTodo">
-              <span class="icon">
-                <i class="fa fa-github"></i>
-              </span>
+      <div class="swiper-container">
+        <div id="navbarMenuHeroB" class="navbar-menu has-text-centered">
+          <span class="navbar-item is">
+            <a class=" is-small">
+              <a href="https://github.com/Dankni95/simpleTodo">
+                <span class="icon">
+                  <i class="fa fa-github"></i>
+                </span>
+              </a>
             </a>
-          </a>
-        </span>
-      </div>
-    </div>
-
-    <div class="hero-foot">
-      <nav class="tabs is-boxed is-fullwidth">
-        <div class="container">
-          <ul>
-            <li class="is-active">
-              <a href="google.com">Overview</a>
-            </li>
-            <li>
-              <a>New Task</a>
-            </li>
-            <li>
-              <a>Sort by tag</a>
-            </li>
-            <li>
-              <a class="tab is-fullwidth">Search</a>
-            </li>
-          </ul>
+          </span>
         </div>
-      </nav>
-    </div>
+        <!-- Additional required wrapper -->
+        <br>
+        <div class="swiper-wrapper">
+          <!-- Slides -->
+          <div class="swiper-slide">
+            <div class="subtitle" data-swiper-parallax="-200"> 
+              <img src="https://bulma.io/images/bulma-type-white.png" alt="Logo"><span><h1>ERS 🍺🍺🍺🍺🍺🍺🍺🍺</h1></span>
+            </div>
+          </div>
+          <div class="swiper-slide">
+              <h1 class="title">Jeg</h1>
+            </div>
+            <div class="swiper-slide">
+              <h1 class="title">Tukler</h1>
+            </div>
+            <div class="swiper-slide">
+              <h1 class="title">Med</h1>
+            </div>
+            <div class="swiper-slide">
+              <h1 class="title">Libraries..</h1>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- If we need navigation buttons -->
+        <div class="swiper-button-prev swiper-button-white"></div>
+        <div class="swiper-button-next swiper-button-white"></div>
+      </div>
+
+
+      <div class="hero-foot">
+        <nav class="tabs is-boxed is-fullwidth">
+          <div class="container">
+            <ul>
+              <li class="is-active">
+                <a href="google.com">Overview</a>
+              </li>
+              <li>
+                <a>New Task</a>
+              </li>
+              <li>
+                <a>Sort by tag</a>
+              </li>
+              <li>
+                <a class="tab is-fullwidth">Search</a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </div>
   </section>
 
 
-  
+
 
   <!-- confirmation modal???   -->
 
@@ -112,13 +137,13 @@
               <a class="level-item">
                 <input id="delete-cancel" class="button is-info" type="submit" value="Cancel">
               </a>
-            </input>
-          </div>
-        </nav>
+              </input>
+            </div>
+          </nav>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
   <!-- Sett hidden if applicable -->
   <div style="margin-top:50px; width: 80%;" class="container is-link">
@@ -225,38 +250,50 @@
         </div>
         <header class="modal-card-head ">
           <span id="update-modal-tag" class="tag is-visible is-primary is-centered"></span>
-        <input id="update-modal-title" class="modal-card-title" type="text" value="">
-        <button id="update-modal-edit-btn" class="button is-white is-rounded is-outlined">Edit title</button>
-      </input>
-    </header>
-    <section class="modal-card-body">
-      <textarea rows="10" id="update-modal-body" class="input" type="text" value="">
+          <input id="update-modal-title" class="modal-card-title" type="text" value="">
+          <button id="update-modal-edit-btn" class="button is-white is-rounded is-outlined">Edit title</button>
+          </input>
+        </header>
+        <section class="modal-card-body">
+          <textarea rows="10" id="update-modal-body" class="input" type="text" value="">
       </textarea>
-      <br>
-      <input type="range" id="slider" value="1" max="100">
-    </section>
-    <footer class="modal-card-foot">
-      <button id="update-modal-save" class="button is-success">Save changes</button>
-      <button id="update-cancel" class="button">Cancel</button>
-    </footer>
+          <br>
+          <input type="range" id="slider" value="1" max="100">
+        </section>
+        <footer class="modal-card-foot">
+          <button id="update-modal-save" class="button is-success">Save changes</button>
+          <button id="update-cancel" class="button">Cancel</button>
+        </footer>
+      </div>
+    </div>
   </div>
-  </div>
-</div>
 
 
   <div id="toDos" style="margin-top:50px; padding: 55px; width: 98%;" class="block"></div>
 
-  
 
 
-  <script src="index.js">
 
-
+  <script src="index.js"></script>
+  <script src="https://unpkg.com/swiper/swiper-bundle.js"></script>
+  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+  <script>
+    let swiper = new Swiper('.swiper-container', {
+      speed: 200,
+      parallax: true,
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
+      },
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      },
+      autoplay: {
+        delay: 2000,
+      },
+    });
   </script>
-
-
-
-
 
 
 
