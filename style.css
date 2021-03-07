@@ -6,3 +6,16 @@ div {
   background-color: lightblue;
   
 }
+.navbar {
+  	
+    position: sticky;
+    top: 10%;
+    
+    
+  }
+  
+  #create-success{
+    
+    z-index: 100;
+   background-color: lightbue;
+} 

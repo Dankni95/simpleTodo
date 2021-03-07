@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html class="has-navbar-fixed-bottom">
 
 <head>
   <meta charset="UTF-8">
@@ -13,6 +13,19 @@
 </head>
 
 <body>
+  <nav id="create-success" class="navbar is-fixed-bottom is-hidden" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand ">
+      <div class="container is-max-desktop">
+    <div class="notification is-primary has-text-centered">
+        <p class="has-text-info" id="success-text">
+  
+        </p>
+      </div>
+    </div>
+  </div>
+</nav>
+
+
   <section class="hero is-info is-small">
     <br>
     <div class="hero-head">
@@ -71,6 +84,8 @@
       </nav>
     </div>
   </section>
+
+
   
 
   <!-- confirmation modal???   -->
@@ -201,28 +216,22 @@
   </div>
   <br>
 
-
-  <div class="container is-widescreen is-hidden" id="create-success">
-    <div class="notification is-info " id="success-text">
-    </div>
-  </div>
   <!-- is-active gjør den visible -->
-  <div class="modal is-">
+  <div id="update-modal" class="modal is-">
     <div class="modal-background "></div>
     <div class="modal-card">
       <header class="modal-card-head ">
         <p class="modal-card-title">Add modal title to functionality <span class="tag is-visible"> hello </span></p>
-        <button class="delete" aria-label="close"></button>
+        <button id="update-close" class="delete" aria-label="close"></button>
       </header>
       <section class="modal-card-body">
-        <span class="tag is-primary">Hello</span>
-
-
-        Hello!
+        <div class="title">
+          Under construction!
+        </div>
       </section>
       <footer class="modal-card-foot">
         <button class="button is-success">Save changes</button>
-        <button class="button">Cancel</button>
+        <button id="update-cancel" class="button">Cancel</button>
       </footer>
     </div>
   </div>
@@ -230,7 +239,7 @@
 
   <div id="toDos" style="margin-top:50px; padding: 55px; width: 98%;" class="block"></div>
 
-
+  
 
 
   <script src="index.js">
@@ -246,4 +255,4 @@
 
 </body>
 
-</html>
+</body>

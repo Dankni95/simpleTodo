@@ -9,6 +9,9 @@ const successText = document.getElementById("success-text");
 const deleteDiv = document.getElementById("delete-div");
 const deleteConfirmed = document.getElementById("delete-confirm");
 const deleteCancelled = document.getElementById("delete-cancel");
+const updateToDo = document.getElementById("update-modal");
+const updateModalClose = document.getElementById("update-close");
+const updateModalCancel = document.getElementById("update-cancel");
 
 
 
@@ -45,7 +48,7 @@ class Todo {
       <p class="notification has-text-centered ${this.customize()}" style="padding: 55px;">Progress bar
       <br>
           <br>
-          <progress class="progress is-large is-danger" max="100">30%</progress>
+          <progress class="progress is-large is-danger" max="100"></progress>
           </p>
 
           </div>
@@ -90,7 +93,7 @@ class Todo {
           <p class="notification has-text-centered ${this.customize()}" style="padding: 54px; width: 105%; right: 3%">Progress bar
           <br>
           <br>
-            <progress style="width: 100%;" class="progress is-link is-large" value="30" max="100">50%</progress>
+            <progress style="width: 100%;" class="progress is-link is-large" value="" max="100"></progress>
             </p>
             </div>
             </div>
@@ -150,7 +153,7 @@ function limitLengthEmptyTitle() {
   if (toDoTitle.value.length > 45 || toDoTitle.value.length === 0) {
     toDoTitle.className = `input is-danger`;
     titleAlert.className = `help is-danger`;
-    titleAlert.innerHTML = "Title cannot be too long or empty";
+    titleAlert.innerText = "Title cannot be too long or empty";
   } else {
     toDoTitle.className = `input is-primary`;
     titleAlert.className = `help is-hidden`;
@@ -168,15 +171,13 @@ function createSuccessMessage(deleteOrCreate) {
 
   // add get deleted object
   if (deleteOrCreate) {
-    successText.innerHTML = `You just deleted <strong>a task</strong> with tag <span class="tag is-dark is-rouded">${toDoTag.value}</span><button class="button is-info is-loading"></button> `;
-    createSuccess.className = "container is-widescreen has-text-centered";
-    window.scrollTo({ top: 180, behavior: 'smooth' });
+    successText.innerHTML = `You just deleted <strong>a task</strong> with tag <span class="tag is-dark is-rouded">${toDoTag.value}</span><button class="button is-primary is-loading"></button> `;
+    createSuccess.className = "navbar is-fixed-bottom";
 
-    setTimeout(() => { createSuccess.className = "container is-widescreen has-text-centered is-hidden"; }, 1500);
+    setTimeout(() => { createSuccess.className = "navbar is-fixed-bottom is-hidden"; }, 1500);
   } else if (!deleteOrCreate) {
-    successText.innerHTML = `You just added <strong>new task</strong> <code>" ${toDoTitle.value} "</code> with tag <span class="tag is-dark is-rouded">${toDoTag.value}</span><button class="button is-info is-loading"></button> `;
-    createSuccess.className = "container is-widescreen has-text-centered";
-    window.scrollTo({ top: 280, behavior: 'smooth' });
+    successText.innerHTML = `You just added <strong>new task</strong> <code>" ${toDoTitle.value} "</code> with tag <span class="tag is-dark is-rouded">${toDoTag.value}</span><button class="button is-primary is-loading"></button> `;
+    createSuccess.className = "navbar is-fixed-bottom";
     setTimeout(() => { location.reload(); }, 1500);
 
 
@@ -239,29 +240,43 @@ document.addEventListener('click', function (e) {
   for (let i = 0; i < buttonIds.length; i++) {
     if (e.target.id === buttonIds[i].id) {
       let clickedButtonId = buttonIds[i].id;
+      var checkIfUpdateButton = clickedButtonId.charAt(0);
 
-      // Since buttonID full name is example:"deleteBtn1", slice to integer for selection
-      let sliceDownToInteger = clickedButtonId.slice(clickedButtonId.length - 1);
-      let childrenDivRemove = document.querySelector(`#toDos${sliceDownToInteger}`);
-      // To DO:
-      // Add validiontion for deletion // Done
 
-      //Making confirmation modal visible
-      deleteDiv.className = "modal is-active";
-      deleteConfirmed.onclick = () => deleteNow(true); 
-      deleteCancelled.onclick = () => deleteNow(false); 
+      //jeesus IFCEPTION!!
+      //This if check if the button clicked starts with u, for updateBtn id. Then unhide update modal!
+      if (checkIfUpdateButton === "u") {
+        updateToDo.className ="modal is-active";
+        updateModalCancel.onclick = () => updateToDo.className ="modal is-hidden";
+        updateModalClose.onclick = () => updateToDo.className ="modal is-hidden";
+      }else{
 
-      function deleteNow(deleteOrCancel) {
-        if (deleteOrCancel) {
-          //delete
-          deleteFromLocalStorage(sliceDownToInteger)
-          childrenDivRemove.remove();
-          deleteDiv.className = "modal is-hidden";
-        }else{
-          //Cancel
-          deleteDiv.className = "modal is-hidden";
+        
+        // Since buttonID full name is example:"deleteBtn1", slice to integer for selection
+        let sliceDownToInteger = clickedButtonId.slice(clickedButtonId.length - 1);
+        let childrenDivRemove = document.querySelector(`#toDos${sliceDownToInteger}`);
+        // To DO:
+        // Add validiontion for deletion // Done
+  
+        //Making confirmation modal visible
+        deleteDiv.className = "modal is-active";
+        deleteConfirmed.onclick = () => deleteNow(true); 
+        deleteCancelled.onclick = () => deleteNow(false); 
+  
+        function deleteNow(deleteOrCancel) {
+          if (deleteOrCancel) {
+            //delete
+            deleteFromLocalStorage(sliceDownToInteger)
+            childrenDivRemove.remove();
+            deleteDiv.className = "modal is-hidden";
+          }else{
+            //Cancel
+            deleteDiv.className = "modal is-hidden";
+          }
         }
+
       }
+
     }
   }
 });
