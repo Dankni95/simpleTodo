@@ -9,9 +9,14 @@ const successText = document.getElementById("success-text");
 const deleteDiv = document.getElementById("delete-div");
 const deleteConfirmed = document.getElementById("delete-confirm");
 const deleteCancelled = document.getElementById("delete-cancel");
-const updateToDo = document.getElementById("update-modal");
+const updateModalDiv = document.getElementById("update-modal");
+const updateModalTitle = document.getElementById("update-modal-title");
+const updateModalBody = document.getElementById("update-modal-body");
 const updateModalClose = document.getElementById("update-close");
+const updateModalTag = document.getElementById("update-modal-tag");
 const updateModalCancel = document.getElementById("update-cancel");
+const updateModalSave = document.getElementById("update-modal-save");
+const updateModalEditTitle = document.getElementById("update-modal-edit-btn");
 
 
 
@@ -55,12 +60,12 @@ class Todo {
           <div class="column is-two-thirds">
           <article class="message ${this.customize()} is-large">
           <div class="message-header is-size-4">
-            <span class="tag is-dark is-rouded">${this.tag}</span>
-            ${this.title}
+          <span id="toDosTag${this.id}" class="tag is-dark is-rouded">${this.tag}</span>
+          <p id="toDosTitle${this.id}">${this.title}</p>
             <button id="deleteBtn${this.id}" class="button delete has-addon is-black is-large"></button>
             </div>
             <div class="message-body">
-            <span class="content is-small is-info">${this.body}</span>
+            <span id="toDosBody${this.id}" class="content is-small is-info">${this.body}</span>
             <br>
             <br>
             <br>
@@ -75,12 +80,12 @@ class Todo {
       <div class="column is-two-thirds">
       <article class="message ${this.customize()} is-large">
           <div class="message-header is-size-4">
-          <span class="tag is-dark is-rouded">${this.tag}</span>
-          ${this.title}
+          <span id="toDosTag${this.id}" class="tag is-dark is-rouded">${this.tag}</span>
+         <p id="toDosTitle${this.id}"> ${this.title}</p>
           <button id="deleteBtn${this.id}" class="button delete has-addon is-black is-large"></button>
             </div>
             <div class="message-body">
-            <span class="content is-small">${this.body}</span>
+            <span id="toDosBody${this.id}" class="content is-small">${this.body}</span>
               <br>
               <br>
               <br>
@@ -115,28 +120,26 @@ function sortLocalStorageIdsAfterDeletion() {
   for (let i = 0; i <= keys.length; i++) {
     let localItem = localStorage.getItem(keys[i]);
     if (!localItem) continue;
-    console.log(values.push(localItem));
+   values.push(localItem);
 
   }
-  console.log(values);
   //Sorting after ids
   values.sort(function (a, b) {
 
     return a.slice(-3)[0] - b.slice(-3)[0];
   });
-  let numCallbackRuns = 1;
 
-  localStorage.clear() // WELP, 1h lost for not understanding why there was duplicate entries.. 
+  let numCallbackRuns = 1;
+  localStorage.clear(); // WELP, 1h lost for not understanding why there was duplicate entries.. 
   //did not clear localStorage before rebuilding :/
 
   // then parsing to obj and filling missing ids
   values.forEach(function (element) {
     let parsedElem = JSON.parse(element);
     parsedElem.id = numCallbackRuns;
+
     // then adding sorted and filled objects back to localStorage.. crossing fingers that this works
-    console.log(parsedElem);
     let toDoFromLocal = new Todo(`${parsedElem.title}`, `${parsedElem.body}`, `${parsedElem.tag}`, `${parsedElem.id}`);
-    console.log(toDoFromLocal);
     addToLocalStorage(toDoFromLocal);
     outputFromLocalStorage(toDoFromLocal);
     numCallbackRuns++;
@@ -159,7 +162,7 @@ function limitLengthEmptyTitle() {
     titleAlert.className = `help is-hidden`;
 
     // add task created alert box top :) // Done
-    createSuccessMessage(false);
+    createSuccessMessage("create");
     output();
   }
 }
@@ -167,20 +170,28 @@ function limitLengthEmptyTitle() {
 
 
 
-function createSuccessMessage(deleteOrCreate) {
+function createSuccessMessage(mode) {
 
-  // add get deleted object
-  if (deleteOrCreate) {
-    successText.innerHTML = `You just deleted <strong>a task</strong> with tag <span class="tag is-dark is-rouded">${toDoTag.value}</span><button class="button is-primary is-loading"></button> `;
+  // add get deleted object ---fix
+  if (mode === "delete") {
+    successText.className = "has-text-danger";
+    successText.innerHTML = `You just <strong> deleted </strong> a task </strong><button class="button is-primary is-loading"></button> `;
     createSuccess.className = "navbar is-fixed-bottom";
-
     setTimeout(() => { createSuccess.className = "navbar is-fixed-bottom is-hidden"; }, 1500);
-  } else if (!deleteOrCreate) {
+
+  } else if (mode === "create") {
+    successText.className = "has-text-info";
     successText.innerHTML = `You just added <strong>new task</strong> <code>" ${toDoTitle.value} "</code> with tag <span class="tag is-dark is-rouded">${toDoTag.value}</span><button class="button is-primary is-loading"></button> `;
     createSuccess.className = "navbar is-fixed-bottom";
     setTimeout(() => { location.reload(); }, 1500);
+  }else{
 
+    // fires when buttons/actions are under construction
 
+    successText.className = "has-text-danger";
+    successText.innerHTML = `Something went wrong or action is still <strong> under construction </strong><button class="button is-primary is-loading"></button> `;
+    createSuccess.className = "navbar is-fixed-bottom";
+    setTimeout(() => { createSuccess.className = "navbar is-fixed-bottom is-hidden"; }, 2000);
 
   }
 }
@@ -226,7 +237,7 @@ function deleteFromLocalStorage(keyToDelete) {
   localStorage.removeItem(`${keyToDelete}`);
 
   //Need to sort ids after one is deleted
-  createSuccessMessage(true);
+  createSuccessMessage("delete");
   clearDivForRebuilding();  // clearing divs after deletion for rebuilding, no need to reload page.
   sortLocalStorageIdsAfterDeletion();
 }
@@ -246,15 +257,29 @@ document.addEventListener('click', function (e) {
       //jeesus IFCEPTION!!
       //This if check if the button clicked starts with u, for updateBtn id. Then unhide update modal!
       if (checkIfUpdateButton === "u") {
-        updateToDo.className ="modal is-active";
-        updateModalCancel.onclick = () => updateToDo.className ="modal is-hidden";
-        updateModalClose.onclick = () => updateToDo.className ="modal is-hidden";
-      }else{
+        updateModalDiv.className ="modal is-active";
+        
+        let sliceDownToInteger = clickedButtonId.slice(clickedButtonId.length - 1);
+        let toDosTitle = document.getElementById(`toDosTitle${sliceDownToInteger}`).innerText;
+        let toDosBody = document.getElementById(`toDosBody${sliceDownToInteger}`).innerText;
+        let toDosTag = document.getElementById(`toDosTag${sliceDownToInteger}`).innerText;
+        
 
+        updateModalBody.value = `${toDosBody}`;
+        updateModalTitle.value = `${toDosTitle}`;
+        updateModalTag.innerText = `${toDosTag}`;
+        
+        updateModalCancel.onclick = () => updateModalDiv.className ="modal is-hidden";
+        updateModalClose.onclick = () => updateModalDiv.className ="modal is-hidden";
+        updateModalSave.onclick = () => createSuccessMessage("under construction");
+        updateModalEditTitle.onclick = () => updateModalTitle.focus();
+      }else{
         
         // Since buttonID full name is example:"deleteBtn1", slice to integer for selection
         let sliceDownToInteger = clickedButtonId.slice(clickedButtonId.length - 1);
         let childrenDivRemove = document.querySelector(`#toDos${sliceDownToInteger}`);
+
+
         // To DO:
         // Add validiontion for deletion // Done
   

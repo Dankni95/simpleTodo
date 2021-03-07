@@ -218,23 +218,30 @@
 
   <!-- is-active gjør den visible -->
   <div id="update-modal" class="modal is-">
-    <div class="modal-background "></div>
-    <div class="modal-card">
-      <header class="modal-card-head ">
-        <p class="modal-card-title">Add modal title to functionality <span class="tag is-visible"> hello </span></p>
-        <button id="update-close" class="delete" aria-label="close"></button>
-      </header>
-      <section class="modal-card-body">
-        <div class="title">
-          Under construction!
+    <div class="modal-background">
+      <div class="modal-card">
+        <div id="hidebg" class="notification">
+          <button id="update-close" class="delete" aria-label="close"></button>
         </div>
-      </section>
-      <footer class="modal-card-foot">
-        <button class="button is-success">Save changes</button>
-        <button id="update-cancel" class="button">Cancel</button>
-      </footer>
-    </div>
+        <header class="modal-card-head ">
+          <span id="update-modal-tag" class="tag is-visible is-primary is-centered"></span>
+        <input id="update-modal-title" class="modal-card-title" type="text" value="">
+        <button id="update-modal-edit-btn" class="button is-white is-rounded is-outlined">Edit title</button>
+      </input>
+    </header>
+    <section class="modal-card-body">
+      <textarea rows="10" id="update-modal-body" class="input" type="text" value="">
+      </textarea>
+      <br>
+      <input type="range" id="slider" value="1" max="100">
+    </section>
+    <footer class="modal-card-foot">
+      <button id="update-modal-save" class="button is-success">Save changes</button>
+      <button id="update-cancel" class="button">Cancel</button>
+    </footer>
   </div>
+  </div>
+</div>
 
 
   <div id="toDos" style="margin-top:50px; padding: 55px; width: 98%;" class="block"></div>
@@ -255,4 +262,4 @@
 
 </body>
 
-</body>
+</html>
