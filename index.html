@@ -11,11 +11,6 @@
   <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.css" />
   <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
 
-
-
-
-
-
   <title>Simple to do</title>
 </head>
 
@@ -62,52 +57,54 @@
         <div class="swiper-wrapper">
           <!-- Slides -->
           <div class="swiper-slide">
-            <div class="subtitle" data-swiper-parallax="-200"> 
-              <img src="https://bulma.io/images/bulma-type-white.png" alt="Logo"><span><h1>ERS 🍺🍺🍺🍺🍺🍺🍺🍺</h1></span>
+            <div class="subtitle" data-swiper-parallax="-200">
+              <img src="https://bulma.io/images/bulma-type-white.png" alt="Logo"><span>
+                <h1>ERS 🍺🍺🍺🍺🍺🍺🍺🍺</h1>
+              </span>
             </div>
           </div>
           <div class="swiper-slide">
-              <h1 class="title">Jeg</h1>
-            </div>
-            <div class="swiper-slide">
-              <h1 class="title">Tukler</h1>
-            </div>
-            <div class="swiper-slide">
-              <h1 class="title">Med</h1>
-            </div>
-            <div class="swiper-slide">
-              <h1 class="title">Libraries..</h1>
-            </div>
-
+            <h1 class="title">Jeg</h1>
           </div>
+          <div class="swiper-slide">
+            <h1 class="title">Tukler</h1>
+          </div>
+          <div class="swiper-slide">
+            <h1 class="title">Med</h1>
+          </div>
+          <div class="swiper-slide">
+            <h1 class="title">Libraries..</h1>
+          </div>
+
         </div>
-
-        <!-- If we need navigation buttons -->
-        <div class="swiper-button-prev swiper-button-white"></div>
-        <div class="swiper-button-next swiper-button-white"></div>
       </div>
 
+      <!-- If we need navigation buttons -->
+      <div class="swiper-button-prev swiper-button-white"></div>
+      <div class="swiper-button-next swiper-button-white"></div>
+    </div>
 
-      <div class="hero-foot">
-        <nav class="tabs is-boxed is-fullwidth">
-          <div class="container">
-            <ul>
-              <li class="is-active">
-                <a href="google.com">Overview</a>
-              </li>
-              <li>
-                <a>New Task</a>
-              </li>
-              <li>
-                <a>Sort by tag</a>
-              </li>
-              <li>
-                <a class="tab is-fullwidth">Search</a>
-              </li>
-            </ul>
-          </div>
-        </nav>
-      </div>
+
+    <div class="hero-foot">
+      <nav class="tabs is-boxed is-fullwidth">
+        <div id="nav-children" class="container">
+          <ul>
+            <li class="is-active">
+              <a id="overview" onclick="navFunctionality(this)">Overview</a>
+            </li>
+            <li>
+              <a id="new-task" onclick="navFunctionality(this)">New Task</a>
+            </li>
+            <li>
+              <a id="sort-tag" onclick="navFunctionality(this)">Sort by tag</a>
+            </li>
+            <li>
+              <a id="search" onclick="navFunctionality(this)">Search</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </div>
   </section>
 
 
@@ -146,7 +143,7 @@
   </div>
 
   <!-- Sett hidden if applicable -->
-  <div style="margin-top:50px;" class="container is-max-desktop">
+  <div id="task-form" style="margin-top:50px;" class="container is-max-desktop is-hidden">
 
 
     <!-- Fill inn for toDo, new toDo-->
@@ -160,7 +157,7 @@
             <!-- if not filled, is-danger and unhide help is-danger under! -->
             <input class="input" id="toDosTitle" type="text" placeholder="Add to do title" required>
             <span class="icon is-small is-left">
-              <i class="fas fa-user"></i>
+              <i class="fa fa-check-circle"></i>
               <p class="help is-hidden" id="tooLongStringAlert">
               </p>
             </span>
@@ -189,25 +186,7 @@
       </div>
     </div>
 
-    <div class="field is-horizontal">
-      <div class="field-label">
-        <label class="label">Already a member?</label>
-      </div>
-      <div class="field-body">
-        <div class="field is-narrow">
-          <div class="control">
-            <label class="radio">
-              <input type="radio" name="member">
-              Yes
-            </label>
-            <label class="radio">
-              <input type="radio" name="member">
-              No
-            </label>
-          </div>
-        </div>
-      </div>
-    </div>
+
 
 
     <div class="field is-horizontal">
@@ -249,7 +228,7 @@
           <button id="update-close" class="delete" aria-label="close"></button>
         </div>
         <header class="modal-card-head ">
-          <span id="update-modal-tag" class="tag is-visible is-primary is-centered"></span>
+          <span id="update-modal-tag" class="tag is-visible is-dark is-centered"></span>
           <input id="update-modal-title" class="modal-card-title" type="text" value="">
           <button id="update-modal-edit-btn" class="button is-white is-rounded is-outlined">Edit title</button>
           </input>
@@ -258,7 +237,7 @@
           <textarea rows="10" id="update-modal-body" class="input" type="text" value="">
       </textarea>
           <br>
-          <input type="range" id="slider" value="1" max="100">
+          <input id="progress-bar" type="range" class="ranger" value="1" max="100">
         </section>
         <footer class="modal-card-foot">
           <button id="update-modal-save" class="button is-success">Save changes</button>
@@ -269,10 +248,7 @@
   </div>
 
 
-  <div id="toDos" style="margin-top:50px; padding: 55px; width: 98%;" class="block"></div>
-
-
-
+  <div id="toDos" style="margin-top:50px; padding: 20px; width: 100%;" class="block"></div>
 
   <script src="index.js"></script>
   <script src="https://unpkg.com/swiper/swiper-bundle.js"></script>
