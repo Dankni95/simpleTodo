@@ -143,13 +143,13 @@
   </div>
 
   <!-- Sett hidden if applicable -->
-  <div id="task-form" style="margin-top:50px;" class="container is-max-desktop is-hidden">
+  <div id="task-form" style="margin-top:50px; padding: 10px;" class="container is-hidden">
 
 
     <!-- Fill inn for toDo, new toDo-->
     <div class="field is-horizontal">
       <div class="field-label">
-        <label class="label">Title</label>
+        <label class="label has-text-centered">Title</label>
       </div>
       <div class="field-body is-horizontal">
         <div class="field">
@@ -168,10 +168,10 @@
 
     <div class="field is-horizontal">
       <div class="field-label is-normal">
-        <label class="label">Tag</label>
+        <label class="label has-text-centered">Tag</label>
       </div>
       <div class="field-body">
-        <div class="field is-narrow">
+        <div class="field">
           <div class="control">
             <div class="select">
               <select id="toDosTag">
@@ -185,13 +185,13 @@
         </div>
       </div>
     </div>
-
+  
 
 
 
     <div class="field is-horizontal">
       <div class="field-label is-normal">
-        <label class="label">To do body</label>
+        <label class="label has-text-centered">To do body</label>
       </div>
       <div class="field-body">
         <div class="field">
@@ -217,33 +217,29 @@
       </div>
     </div>
   </div>
-  </div>
-  <br>
+    
 
-  <!-- is-active gjør den visible -->
-  <div id="update-modal" class="modal is-">
-    <div class="modal-background">
-      <div class="modal-card">
-        <div id="hidebg" class="notification">
-          <button id="update-close" class="delete" aria-label="close"></button>
-        </div>
-        <header class="modal-card-head ">
-          <span id="update-modal-tag" class="tag is-visible is-dark is-centered"></span>
-          <input id="update-modal-title" class="modal-card-title" type="text" value="">
-          <button id="update-modal-edit-btn" class="button is-white is-rounded is-outlined">Edit title</button>
-          </input>
-        </header>
-        <section class="modal-card-body">
-          <textarea rows="10" id="update-modal-body" class="input" type="text" value="">
+
+    <div id="update-modal" class="modal">
+      <div class="modal-background"></div>
+    <div class="modal-card">
+      <header class="modal-card-head ">
+        <button id="update-close" class="modal-close" aria-label="close"></button>
+        <span id="update-modal-tag" class="tag is-visible is-dark is-centered"></span>
+        <input id="update-modal-title" class="modal-card-title" type="text" value="">
+        <button id="update-modal-edit-btn" class="button is-white is-rounded is-outlined">Edit title</button>
+      </input>
+    </header>
+    <section class="modal-card-body">
+      <textarea rows="10" id="update-modal-body" class="input" type="text" value="">
       </textarea>
-          <br>
-          <input id="progress-bar" type="range" class="ranger" value="1" max="100">
-        </section>
-        <footer class="modal-card-foot">
-          <button id="update-modal-save" class="button is-success">Save changes</button>
-          <button id="update-cancel" class="button">Cancel</button>
-        </footer>
-      </div>
+      <br>
+      <input id="progress-bar" type="range" class="ranger" value="1" max="100">
+    </section>
+    <footer class="modal-card-foot">
+      <button id="update-modal-save" class="button is-success">Save changes</button>
+      <button id="update-cancel" class="button">Cancel</button>
+    </footer>
     </div>
   </div>
 
